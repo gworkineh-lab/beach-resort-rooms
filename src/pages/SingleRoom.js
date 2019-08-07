@@ -5,7 +5,6 @@ import Banner from '../components/Banner';
 import { Link } from 'react-router-dom';
 import { RoomContext } from '../context';
 
-
 export default class SingleRoom extends Component {
 
     constructor(props) {
@@ -23,7 +22,7 @@ export default class SingleRoom extends Component {
         if (!room) {
             return <div className="error">
                 <h3>no such room could be found...</h3>
-                <Link to="/rooms" className="btn-primary">Back to Rooms</Link>
+                <Link to="/rooms/" className="btn-primary">Back to Rooms</Link>
             </div>
         }
         const { name,
@@ -36,6 +35,7 @@ export default class SingleRoom extends Component {
             pets,
             images
         } = room;
+        console.log(name);
         return (
             <Hero hero="roomsHero" >
                 <Banner title={`${name} Room`}>
