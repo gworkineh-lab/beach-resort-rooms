@@ -4,7 +4,7 @@ import Hero from '../components/Hero';
 import Banner from '../components/Banner';
 import { Link } from 'react-router-dom';
 import { RoomContext } from '../context';
-
+import StyledHero from '../components/StyledHero';
 export default class SingleRoom extends Component {
 
     constructor(props) {
@@ -35,15 +35,55 @@ export default class SingleRoom extends Component {
             pets,
             images
         } = room;
-        console.log(name);
+        const [mainImg, ...defaultImg] = images;
         return (
-            <Hero hero="roomsHero" >
-                <Banner title={`${name} Room`}>
-                    <Link to="/rooms" className="btn-primary">
-                        Back to Rooms
+            <>
+                <StyledHero img={mainImg || this.state.defaultBcg} >
+                    <Banner title={`${name} room`}>
+                        <Link to="/rooms" className="btn-primary">
+                            Back to Rooms
                     </Link>
-                </Banner>
-            </Hero>
+                    </Banner>
+                </StyledHero>
+                <section className="single-room">
+                    <div className="single-room-images">
+                        {defaultImg.map((item, index) => {
+                            return <img key={index} src={item} alt={name} />;
+                        })}
+                    </div>
+                    <div className="single-room-info">
+                        <article className="desc">
+                            <h3>details</h3>
+                            <p>{description}</p>
+                        </article>
+                        <article className="info">
+                            <h3>info</h3>
+                            <p>price : $ {price}</p>
+                            <p>size :  {size} SQFT</p>
+                            <h6>
+                                max-capacity: {""}
+                                {capacity > 1 ? `${capacity} people` : `${capacity} peoples`}
+                            </h6>
+                            <h6>
+                                {pets ? "pets allowed" : "pets not allowed"}
+                            </h6>
+                            <h6>
+                                {breakfast && "free breakfast included"}
+                            </h6>
+                        </article>
+                    </div>
+                </section>
+                <section className="room-extras">
+                    <h6>extras</h6>
+                    <ul className="extras">
+                        {extras.map((item, index) => {
+                            return <li key={index}>
+                                - {item}
+                            </li>;
+                        })}
+                    </ul>
+                </section>
+            </>
         );
     }
 }
