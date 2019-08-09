@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import items from './data';
+import Client from './Contentful';
+
+Client.getEntries().then(response => console.log(response.items))
+
 const RoomContext = React.createContext();
 // <RoomContext.Provider value={'hello'} />
 
@@ -20,7 +24,7 @@ class RoomProvider extends Component {
         pets: false
     };
 
-    //getData function from external ource will be here
+    //getData function from external source will be here
 
     componentDidMount() {
         let rooms = this.formatData(items);
@@ -56,7 +60,7 @@ class RoomProvider extends Component {
 
     handleChange = event => {
         const target = event.target;
-        const value = event.type === 'checkbox' ?
+        const value = target.type === 'checkbox' ?
             target.checked : target.value;
         const name = event.target.name;
         this.setState(
@@ -75,6 +79,8 @@ class RoomProvider extends Component {
         // to transform values
         capacity = parseInt(capacity);
 
+        price = parseInt(price);
+
         // filter by types
         if (type !== 'all') {
             tempRooms = tempRooms.filter(room => room.type === type);
@@ -84,6 +90,21 @@ class RoomProvider extends Component {
         if (capacity !== 1) {
             tempRooms = tempRooms.filter(room => room.capacity >= capacity);
         }
+        //filter by price
+        tempRooms = tempRooms.filter(room => room.price <= price);
+        //filter by extra
+        tempRooms = tempRooms.filter(room => room.size >= minSize && room.size <= maxSize);
+
+        // filter by breakfast
+        if (breakfast) {
+            tempRooms = tempRooms.filter(room => room.breakfast === true);
+        }
+
+        // filter by pets
+        if (pets) {
+            tempRooms = tempRooms.filter(room => room.pets === true);
+        }
+        // change state
         this.setState({
             sortedRooms: tempRooms
         })
