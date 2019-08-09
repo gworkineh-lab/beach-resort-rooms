@@ -43,12 +43,12 @@ class RoomProvider extends Component {
                 maxSize
             });
         } catch (error) {
-            //console.log(error);
+            //  console.log(error);
         }
     };
 
     componentDidMount() {
-        this.getData();
+        this.getData()
         // let rooms = this.formatData(items);
         // let featuredRooms = rooms.filter(room => room.featured === true);
         // let maxPrice = Math.max(...rooms.map(item => item.price));
@@ -62,7 +62,7 @@ class RoomProvider extends Component {
         //     maxPrice,
         //     maxSize
         // });
-    }
+    };
 
     formatData(items) {
         let tempItems = items.map(item => {
@@ -82,9 +82,9 @@ class RoomProvider extends Component {
 
     handleChange = event => {
         const target = event.target;
-        const value = target.type === 'checkbox' ?
+        const value = target.type === "checkbox" ?
             target.checked : target.value;
-        const name = event.target.name;
+        const name = target.name;
         this.setState(
             {
                 [name]: value
@@ -104,7 +104,7 @@ class RoomProvider extends Component {
         price = parseInt(price);
 
         // filter by types
-        if (type !== 'all') {
+        if (type !== "all") {
             tempRooms = tempRooms.filter(room => room.type === type);
         }
 
