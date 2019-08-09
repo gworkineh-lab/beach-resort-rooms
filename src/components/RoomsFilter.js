@@ -7,13 +7,13 @@ import Title from '../components/Title';
 const getUniqe = (items, value) => {
     return [...new Set(items.map(item => item[value]))];
 };
-export default function RoomsFilter({ rooms }) {
+const RoomsFilter = ({ rooms }) => {
     const context = useContext(RoomContext);
     const {
         handleChange, type, capacity, price, minPrice, maxPrice, minSize, maxSize, breakfast, pets
     } = context;
     // get uniqe types
-    let types = getUniqe(rooms, 'type');
+    let types = getUniqe(rooms, "type");
     // add all 
     types = ['all', ...types];
     // map to jsx
@@ -78,12 +78,12 @@ export default function RoomsFilter({ rooms }) {
                 <div className="form-control">
                     <div className="single-extra">
                         <input type="checkbox" name="breakfast" id="breakfast"
-                            checkbox={breakfast} onChange={handleChange} />
+                            checked={breakfast} onChange={handleChange} />
                         <label htmlFor="breakfast">breakfast</label>
                     </div>
                     <div className="single-extra">
-                        <input type="checkbox" name="pets" id="pets"
-                            checkbox={pets} onChange={handleChange} />
+                        <input type="checkbox" name="pets"
+                            checked={pets} onChange={handleChange} />
                         <label htmlFor="pets">pets</label>
                     </div>
                 </div>
@@ -92,3 +92,5 @@ export default function RoomsFilter({ rooms }) {
         </section>
     );
 }
+
+export default RoomsFilter;
