@@ -5,6 +5,7 @@ import Client from './Contentful';
 const RoomContext = React.createContext();
 // <RoomContext.Provider value={'hello'} />
 
+
 class RoomProvider extends Component {
     state = {
         rooms: [],
@@ -26,7 +27,8 @@ class RoomProvider extends Component {
     getData = async () => {
         try {
             let response = await Client.getEntries({
-                content_type: "beachResortRooms"
+                content_type: "beachResortRooms",
+                order: "-fields.price"
             });
             console.log(response.items);
             let rooms = this.formatData(response.items);
@@ -43,13 +45,15 @@ class RoomProvider extends Component {
                 maxSize
             });
         } catch (error) {
-            //  console.log(error);
+            console.log(error);
         }
     };
 
     componentDidMount() {
-        this.getData()
+        this.getData();
+        //to access  Local data 
         // let rooms = this.formatData(items);
+        // console.log(rooms);
         // let featuredRooms = rooms.filter(room => room.featured === true);
         // let maxPrice = Math.max(...rooms.map(item => item.price));
         // let maxSize = Math.max(...rooms.map(item => item.size));
@@ -71,6 +75,7 @@ class RoomProvider extends Component {
             let room = { ...item.fields, images, id };
             return room;
         });
+
         return tempItems;
     }
 
@@ -94,7 +99,7 @@ class RoomProvider extends Component {
     };
 
     filterRooms = () => {
-        let { rooms, type, capacity, price, minSize, maxSize, breakfast, pets } = this.state
+        let { rooms, type, capacity, price, minSize, maxSize, breakfast, pets } = this.state;
         // to get all rooms
         let tempRooms = [...rooms]
 
@@ -114,6 +119,7 @@ class RoomProvider extends Component {
         }
         //filter by price
         tempRooms = tempRooms.filter(room => room.price <= price);
+
         //filter by extra
         tempRooms = tempRooms.filter(room => room.size >= minSize && room.size <= maxSize);
 
@@ -129,8 +135,8 @@ class RoomProvider extends Component {
         // change state
         this.setState({
             sortedRooms: tempRooms
-        })
-    }
+        });
+    };
     render() {
         return (
             <RoomContext.Provider

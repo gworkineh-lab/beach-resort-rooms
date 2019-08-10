@@ -37,7 +37,8 @@ const RoomsFilter = ({ rooms }) => {
                         id="type"
                         value={type}
                         className="form-control"
-                        onChange={handleChange}>
+                        onChange={handleChange}
+                    >
                         {types}
                     </select>
                 </div>
